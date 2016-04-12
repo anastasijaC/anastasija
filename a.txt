@@ -1,0 +1,286 @@
+1. baranje najmal element u lista
+(defun najdi(lista pom)
+    (cond 
+      ((null lista) pom)
+      ((< (car lista) pom) (najdi (cdr lista) (car lista)))
+      (T (najdi (cdr lista) pom))))
+	  
+(defun najmal(lista)
+	(najdi lista 3434343))
+
+2. baranje najgolem element u lista
+(defun najdi(lista pom)
+    (cond 
+      ((null lista) pom)
+      ((> (car lista) pom) (najdi (cdr lista) (car lista)))
+      (T (najdi (cdr lista) pom))))
+	  
+(defun najgolem(lista)
+	(najdi lista 0))
+	
+3. zbir na cifri u broj
+(defun zbir (x)
+    (if (= x 0) 0
+        (+ (mod x 10) (zbir (/ (- x (mod x 10)) 10)))))
+		
+4. proizvod na cifri u broj
+(defun proizvod(x)
+  (if (= x 0) 1
+      (* (mod x 10) (proizvod (/ (- x (mod x 10)) 10)))))
+	  
+	  
+5. suma na neparni pozicii(najmalce znacajna cifrna na pozicija 1)
+(defun suma(x)
+    (if (= x 0) 0
+        (+ (mod x 10) (suma (/ (- x (mod x 100)) 100)))))
+		
+6. suma na parni pozicii (najmalce znacajna cifra na pozicija 1)
+(defun suma(x)
+
+	(if (= x 0) 0
+	
+	((/ (- x (mod x 10)) 10)	(+ (mod x 10) (suma (/ (- x (mod x 10)) 10)))))
+
+
+7. kolku pojavuvanja ima na broj vo lista. (rabote i so bukvi) :D
+(defun pojavi(lista broj)
+    (cond 
+      ((null lista) 0)
+      ((eq (car lista) broj) (+ 1 (pojavi (cdr lista) broj)))
+      (T (pojavi (cdr lista) broj))))
+
+8. dekartov proizvod
+(defun dodadi (lista x)
+    (cond
+      ((null lista) nil)
+      (T (cons (list (car lista) x) (dodadi (Cdr lista) x)))))
+(defun dekart (lista1 lista2)
+    (cond
+      ((null lista1) nil)
+      ((null lista2) nil)
+      (T (append (dodadi lista1 (car lista2)) (dekart lista1 (cdr lista2))))))
+
+9. sortiranje lista po rastecki redosled
+(defun najdi(lista a)
+	(cond 
+		((NULL lista) a)
+		((< (car lista) a) (najdi (cdr lista) (car lista)))
+		(T (najdi (cdr lista) a))		
+	)
+)
+(defun najmal(lista)
+	(najdi lista 23232323)
+)
+(defun izbrisi(lista minimum)
+	(cond
+		((NULL lista) NIL)
+		((= (car lista) minimum) (cdr lista))
+		(T (cons (car lista) (izbrisi (cdr lista) minimum)))
+	)
+)
+
+(defun sortiraj(lista)
+	(cond 
+		((NULL lista) NIL)
+		(T (cons (najmal lista) (sortiraj (izbrisi lista (najmal lista)))))
+	)
+)
+
+10. sortiranje lista po opagacki redosled
+(defun najdi (lista max)
+    (cond
+      ((null lista) max)
+      ((> (car lista) max) (najdi (cdr lista) (car lista)))
+      (T (najdi (cdr lista) max))))
+
+(defun najgolem (lista)
+    (najdi lista 0))
+	
+(defun izbrisi (lista x)
+    (cond
+      ((null lista) nil)
+      ((eq (car lista) x ) (izbrisi (cdr lista) x))
+      (T (cons (car lista) (izbrisi (cdr lista) x)))))
+(defun sortiraj (lista)
+    (cond
+      ((null lista) nil)
+      (T (cons (najgolem lista) (sortiraj (izbrisi lista (najgolem lista)))))))
+	  
+11.
+12.	  
+13. Dodavanje element vo lista na krajot
+(defun dodavanje (lista element)
+    (if (null lista) (cons element nil) 
+        (cons (car lista) (dodavanje (cdr lista) element))))
+
+14. Brisenje na element vo lista.
+(defun brisi(lista element)
+    (cond
+      ((null lista) NIL)
+      ((eq element (car lista)) (brisi (cdr lista) element))
+      (T (cons (car lista) (brisi (cdr lista) element)))))
+
+15. 16.
+17. Broj na elementi u lista.
+(defun brele(lista)
+    (if (null lista) 0 (+ 1 (brele (cdr lista)))))
+
+18. Otstranuvanje duplikati u lista.
+(defun otstranuvanje(lista)
+    (cond 
+      ((null lista) NIL)
+      ((eq (car lista) (car (cdr lista))) (otstranuvanje (cdr lista)))
+      (T (cons (car lista) (otstranuvanje (cdr lista))))))
+	  
+19. doveduvanje na prvo nivo.
+
+(defun prvonivo (lista)
+  (cond 
+    ((null lista) nil)
+    ((atom (car lista)) (append (list (car lista)) (prvonivo (cdr lista))))
+    (T (append (prvonivo (car lista)) (prvonivo (cdr lista))))))
+
+20. broj podlisti.
+(defun brpodlisti (lista)
+    (cond
+      ((null lista) 0)
+      ((listp (car lista)) (+ (brpodlisti (car lista)) (+ 1 (brpodlisti (cdr lista))))
+      (T (brpodlisti (cdr lista)))))
+
+21. vadenje cifri od lista na bilo koe nivo.
+(defun broevi (lista)
+    (cond 
+    ((null lista) nil)
+    ((and (atom (car lista)) (numberp (car lista))) (cons (car lista) (broevi (cdr lista))))
+      ((listp (car lista)) (broevi (car lista)))
+     (T (broevi (cdr lista)))))
+22. brisenje na element u lista na bilo koe nivo.
+(defun brisi (lista x)
+	(if (null lista) NIL
+		(if (atom (car lista))
+			(if (eq (car lista) x)
+				(brisi (cdr lista) x)
+				(cons (car lista) (brisi (cdr lista) x))
+			)
+				
+			(cons (brisi (car lista) x) (brisi (cdr lista) x))
+		)
+	)
+)
+23. na koja pozicija se naoga broj vo lista
+(defun reden (lista x)
+    (if (null lista) 0
+        (if (eq (car lista) x)
+            1
+            (+ 1 (reden (cdr lista) x)))))
+			
+24. dodavanje atomm na sekoja od posdlistite
+(defun dodadi (lista x)
+	(cond
+		((null lista) NIL)
+		((atom (car lista)) (append (list x (car lista) (dodadi (cdr lista) x))))
+		((listp (car lista)) (append x (dodadi (car lista))))
+		(T (dodadi (cdr lista) x))))
+		
+25. lista sostavena od prvite n elementi
+(defun nti (lista x)
+    (cond
+      ((null lista) nil)
+      ((= x 0) nil)
+      ((cons (car lista) (nti (cdr lista) (- x 1))))))
+	  
+26. Baranje povece cifreni broevi vo lista so povece nivoa
+(defun povecebr (lista)
+    (cond
+      ((null lista) nil)
+      ((and (atom (car lista)) (numberp (car lista)) (> (car lista) 9)) (cons (car lista) (povecebr (cdr lista))))
+      ((listp (car lista)) (povecebr (car lista)))
+      (T (povecebr (cdr lista)))))
+27. Dali e prost brojot
+(defun prost(n)
+	(prost1 n 2)
+)
+
+(defun prost1(n m)
+	(cond
+		((= n m) T)
+		((= (mod n m) 0) NIL)
+		(T (prost1 n (+ m 1)))
+	)
+)
+28. nzd za dva broja.
+(defun nzd (m n)
+    (if (= n 0) m
+        (nzd n (mod m n))))
+29. da se vmetne broj vo mnozestvo.
+(defun vmetni (lista x)
+    (cond
+      ((null lista) (list x))
+      ((eq (car lista) x) lista)
+      (T (cons (car lista) (vmetni (cdr lista) x)))))
+30. otstranuvanje duplikati vo lista
+(defun duplikat (lista x)
+    (if (null lista) (list x)
+        (if (eq (car lista) x) (duplikat (cdr lista) x)
+            (cons x (duplikat lista (car lista))))))
+			
+(defun duplikati (lista)
+    (duplikat lista (car lista)))
+	
+31. otstrani go prviot element vo lista.
+(defun otstrani (lista x)
+    (if (null lista) nil
+        (if (eq (car lista) x ) (cdr lista)
+            (cons (car lista) (otstrani (cdr lista) x)))))
+			
+32. dali A e podmnozestvo vo B
+(defun podm (lista1 lista2)
+    (if (null lista1) T
+        (if (null (member (car lista1) lista2)) nil
+            (podm (cdr  lista1) lista2))))
+			
+			
+33. dali se isti dve mnozestva A i B
+	(defun isti (lista1 lista2)
+    (cond
+      ((and (null lista1) (null lista2)) T)
+      ((null (member (car lista1) lista2)) nil)
+      (T (isti (cdr lista1) (cdr lista2)))))
+
+34. dali e palindrom
+(defun palindrom(lista)
+	(if
+		(null lista)
+		T
+		(if
+			(equal (list (car lista)) (last lista))
+			(palindrom (reverse (cdr (reverse (cdr lista)))))
+			NIL
+		)
+	)
+)
+
+35. unija na dve mnozestva
+(defun unija (lista1 lista2)
+    (cond
+      ((null lista1) lista2)
+      ((null (member (car lista1) lista2)) (cons (car lista1) (unija (cdr lista1) lista2)))
+      (T (unija (cdr lista1) lista2))))
+
+36. presek na dve mnozestva.
+(defun presek (lista1 lista2)
+    (cond
+      ((null lista1) nil)
+      ((null (member (car lista1) lista2)) (presek (cdr lista1) lista2))
+      (T (cons (car lista1) (presek (cdr lista1) (cdr lista2))))))
+
+
+37. razlika na dve mnozestva.
+(defun razlika (lista1 lista2)
+    (cond
+      ((null lista1) nil)
+      ((null (member (car lista1) lista2)) (cons (car lista1) (razlika (cdr lista1) lista2)))
+      (T (razlika (cdr lista1) lista2))))	
+
+
+
